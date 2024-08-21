@@ -123,12 +123,7 @@
         if (this.recorder) {
           this.recorder.stop();
           this.recording = false;
-
-          // Get the tracks associated with the MediaStream
-          const tracks = this.recorder.stream.getTracks();
-
-          // Stop each track to release the microphone
-          tracks.forEach((track) => track.stop());
+          this.stream.getTracks().forEach((track) => track.stop());
         }
       },
       processRecording() {

@@ -130,26 +130,6 @@
         if (this.recorder) {
           this.recorder.stop();
           this.recording = false;
-
-          const tracks = this.recorder.stream.getTracks();
-
-          // Create an array of promises, one for each track's stop operation
-          const stopPromises = tracks.map((track) => {
-            return new Promise((resolve) => {
-              track.onended = resolve; // Resolve when the track is actually stopped
-              track.stop();
-            });
-          });
-
-          // Wait for all tracks to be stopped before proceeding
-          Promise.all(stopPromises)
-            .then(() => {
-              console.log("All tracks stopped successfully");
-              // Any further actions after stopping can be placed here
-            })
-            .catch((error) => {
-              console.error("Error stopping tracks:", error);
-            });
         }
       },
       processRecording() {
