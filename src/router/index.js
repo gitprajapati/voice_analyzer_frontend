@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from "vue-router";
-import auth from "./auth";
 import LoginPage from "@/components/loginPage.vue";
 import dashBoard from "@/components/dashBoard.vue";
 import voiceAnalyzer from "@/components/voiceAnalyzer.vue";
@@ -15,7 +14,7 @@ const routes = [
     // Define a route for the root path
     redirect: () => {
       // Check if the user is authenticated
-      if (auth.loggedIn === "true") {
+      if (localStorage.getItem("token")) {
         // If authenticated, redirect to the dashboard
         return { name: "dashboard" };
       } else {
@@ -72,7 +71,7 @@ router.beforeEach((to, from, next) => {
   // Check if the route requires authentication
   if (to.matched.some((record) => record.meta.requiresAuth)) {
     // Check if user is authenticated
-    if (auth.loggedIn === "true") {
+    if (localStorage.getItem("token")) {
       next(); // User is authenticated, allow access
     } else {
       next("/login"); // User is not authenticated, redirect to login
