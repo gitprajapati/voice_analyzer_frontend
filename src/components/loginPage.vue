@@ -51,6 +51,7 @@
             if (result.data.status_code == 200) {
               localStorage.setItem("token", result.data.access_token);
               auth.loggedIn = true;
+              console.log(auth.loggedIn);
               this.$router.push("/dashboard");
             }
           } catch (error) {
