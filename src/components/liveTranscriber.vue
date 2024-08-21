@@ -120,19 +120,10 @@
         }
       },
       stopRecording() {
-        try {
-          if (this.recorder && this.recording) {
-            this.recorder.stop();
-          }
-        } catch (error) {
-          console.error("Error stopping the recorder:", error);
-        } finally {
-          if (this.stream) {
-            this.stream.getTracks().forEach((track) => track.stop());
-            this.stream = null; // Ensure the stream is set to null
-          }
+        if (this.recorder) {
+          this.recorder.stop();
           this.recording = false;
-          this.recorder = null; // Set the recorder to null after stopping
+          this.stream.getTracks().forEach((track) => track.stop());
         }
       },
       processRecording() {
