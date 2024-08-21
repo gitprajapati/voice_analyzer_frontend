@@ -130,6 +130,12 @@
         if (this.recorder) {
           this.recorder.stop();
           this.recording = false;
+
+          // Get the tracks associated with the MediaStream
+          const tracks = this.recorder.stream.getTracks();
+
+          // Stop each track to release the microphone
+          tracks.forEach((track) => track.stop());
         }
       },
       processRecording() {
@@ -145,13 +151,10 @@
           try {
             this.processing = true;
             alert("Audio File sent successfully.");
-            const response = await fetch(
-              "https://voice-analyzer-ou85.onrender.com/vanichat",
-              {
-                method: "POST",
-                body: formData,
-              }
-            );
+            const response = await fetch("http://127.0.0.1:5000/vanichat", {
+              method: "POST",
+              body: formData,
+            });
 
             if (!response.ok) {
               throw new Error("Failed to upload audio");
