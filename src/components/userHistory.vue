@@ -65,7 +65,7 @@
             },
           };
           const response = await axios.get(
-            "https://voice-analyzer-ou85.onrender.com/user-transcriptions-history",
+            "https://vaanitrack-backend.vercel.app/user-transcriptions-history",
             config
           );
           this.transcriptions = response.data;
@@ -82,7 +82,7 @@
             },
           };
           const response = await axios.get(
-            "https://voice-analyzer-ou85.onrender.com/top-unique-phrases",
+            "https://vaanitrack-backend.vercel.app/top-unique-phrases",
             config
           );
           this.topPhrases = response.data.top_phrases;

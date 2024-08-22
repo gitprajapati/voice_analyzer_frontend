@@ -171,7 +171,7 @@
             this.processing = true;
             alert("Audio File sent successfully.");
             const response = await axios.post(
-              "https://voice-analyzer-ou85.onrender.com/transcription",
+              "https://vaanitrack-backend.vercel.app/transcription",
               formData,
               config
             );

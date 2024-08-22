@@ -41,7 +41,7 @@
           try {
             const google_token = response.credential;
             const result = await axios.post(
-              "https://voice-analyzer-ou85.onrender.com/login",
+              "https://vaanitrack-backend.vercel.app/login",
               { google_token }, // Send token as POST body
               {
                 headers: {

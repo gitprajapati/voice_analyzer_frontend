@@ -52,7 +52,7 @@
         };
 
         const response = await axios.get(
-          "https://voice-analyzer-ou85.onrender.com/dashboard",
+          "https://vaanitrack-backend.vercel.app/dashboard",
           config
         );
         if (response.data.status_code === 200) {
@@ -71,7 +71,7 @@
             },
           };
           await axios.delete(
-            "https://voice-analyzer-ou85.onrender.com/logout",
+            "https://vaanitrack-backend.vercel.app/logout",
             config
           ),
             localStorage.removeItem("token"),

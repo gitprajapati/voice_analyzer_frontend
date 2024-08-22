@@ -72,7 +72,7 @@
             },
           };
           await axios.delete(
-            "https://voice-analyzer-ou85.onrender.com/logout",
+            "https://vaanitrack-backend.vercel.app/logout",
             config
           ),
             localStorage.removeItem("token"),

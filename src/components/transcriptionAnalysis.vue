@@ -46,7 +46,7 @@
             },
           };
           const response = await axios.get(
-            "https://voice-analyzer-ou85.onrender.com/word-frequencies",
+            "https://vaanitrack-backend.vercel.app/word-frequencies",
             config
           );
           this.wordFrequencies = response.data;
