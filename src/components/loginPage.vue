@@ -1,6 +1,6 @@
 <template>
   <div>
-    <main>
+    <main class="container">
       <div class="container-fluid log-text">
         <header class="text-center">
           <strong>Welcome to VaaniTrack</strong>
@@ -9,9 +9,9 @@
         </header>
       </div>
       <section
-        class="container my-custom-shadow p-3 mb-5 my-5 w-50 p-5 text-black bg-secondary bg-gradient border rounded-3"
+        class="my-custom-shadow p-3 mb-5 my-5 text-black bg-secondary bg-gradient border rounded-3"
       >
-        <div class="d-flex align-items-center">
+        <div class="d-flex align-items-center flex-column">
           <img
             src="../assets/Logo.gif"
             alt="Logo"
@@ -29,6 +29,7 @@
     </main>
   </div>
 </template>
+
 <script>
   import axios from "axios";
   import auth from "../router/auth";
@@ -51,7 +52,6 @@
             if (result.data.status_code == 200) {
               localStorage.setItem("token", result.data.access_token);
               auth.loggedIn = true;
-              console.log(auth.loggedIn);
               this.$router.push("/dashboard");
             }
           } catch (error) {
@@ -62,17 +62,54 @@
     },
   };
 </script>
+
 <style>
+  /* General styles */
   .log-text {
     color: maroon;
   }
   strong {
-    font-size: 80px;
+    font-size: 3rem;
   }
   h1 {
-    font-size: 40px;
+    font-size: 2rem;
   }
   .my-custom-shadow {
     box-shadow: 0 10px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  /* Styles for medium screens and up */
+  @media (min-width: 768px) {
+    strong {
+      font-size: 3.5rem;
+    }
+    h1 {
+      font-size: 2.5rem;
+    }
+  }
+
+  /* Styles for large screens */
+  @media (min-width: 992px) {
+    strong {
+      font-size: 4rem;
+    }
+    h1 {
+      font-size: 3rem;
+    }
+  }
+
+  /* Styles for small screens */
+  @media (max-width: 768px) {
+    strong {
+      font-size: 2rem;
+    }
+    h1 {
+      font-size: 1.5rem;
+    }
+    .my-custom-shadow {
+      width: 90%;
+      margin-left: auto;
+      margin-right: auto;
+    }
   }
 </style>
