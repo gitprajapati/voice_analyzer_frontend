@@ -41,7 +41,7 @@
           try {
             const google_token = response.credential;
             const result = await axios.post(
-              "https://voice-analyzer-ou85.onrender.com/login",
+              "http://13.49.44.21:5000/login",
               { google_token }, // Send token as POST body
               {
                 headers: {

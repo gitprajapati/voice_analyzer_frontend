@@ -159,7 +159,7 @@
             this.processing = true; // Show "Please wait..."
             alert("Audio File sent successfully.");
             const response = await axios.post(
-              "https://voice-analyzer-ou85.onrender.com/transcription",
+              "http://13.49.44.21:5000/transcription",
               formData,
               config
             );

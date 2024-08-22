@@ -65,7 +65,7 @@
             },
           };
           const response = await axios.get(
-            "https://voice-analyzer-ou85.onrender.com/user-transcriptions-history",
+            "http://13.49.44.21:5000/user-transcriptions-history",
             config
           );
           this.transcriptions = response.data;
@@ -82,7 +82,7 @@
             },
           };
           const response = await axios.get(
-            "https://voice-analyzer-ou85.onrender.com/top-unique-phrases",
+            "http://13.49.44.21:5000/top-unique-phrases",
             config
           );
           this.topPhrases = response.data.top_phrases;

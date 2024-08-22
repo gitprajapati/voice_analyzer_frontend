@@ -71,10 +71,7 @@
               Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
           };
-          await axios.delete(
-            "https://voice-analyzer-ou85.onrender.com/logout",
-            config
-          ),
+          await axios.delete("http://13.49.44.21:5000/logout", config),
             localStorage.removeItem("token"),
             this.$router.push("/login");
         } catch (error) {

@@ -46,7 +46,7 @@
             },
           };
           const response = await axios.get(
-            "https://voice-analyzer-ou85.onrender.com/word-frequencies",
+            "http://13.49.44.21:5000/word-frequencies",
             config
           );
           this.wordFrequencies = response.data;
