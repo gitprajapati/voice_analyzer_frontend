@@ -90,8 +90,8 @@
         audioChunks: [],
         audioBlob: null,
         audioUrl: "",
-
         backendAudioUrl: "", // For storing the audio URL from backend
+        audioStream: null, // Add this line to store the audio stream
       };
     },
     async mounted() {
@@ -103,12 +103,8 @@
       toggleRecording() {
         if (this.recording) {
           this.stopRecording();
-
-          this.recording = false;
         } else {
           this.startRecording();
-
-          this.recording = true;
         }
       },
       async startRecording() {
@@ -116,6 +112,7 @@
           const stream = await navigator.mediaDevices.getUserMedia({
             audio: true,
           });
+          this.audioStream = stream; // Store the stream
 
           this.recorder = new MediaRecorder(stream, { mimeType: "audio/wav" });
           this.recorder.ondataavailable = (e) => this.audioChunks.push(e.data);
@@ -130,6 +127,10 @@
         if (this.recorder) {
           this.recorder.stop();
           this.recording = false;
+
+          // Stop the audio stream tracks
+          this.audioStream.getTracks().forEach((track) => track.stop());
+          this.audioStream = null; // Clear the stream reference
         }
       },
       processRecording() {

@@ -78,26 +78,29 @@
     },
     data() {
       return {
-        recording: false,
-        recorder: null,
-        processing: false,
-        audioChunks: [],
-        audioBlob: null,
-        uploadedAudioBlob: null,
-        audioUrl: "",
-        audioUrlFromFile: "", // URL for uploaded audio file
-        backendAudioUrl: "", // For storing the audio URL from backend
-        transcriptionData: null, // Store the transcription and analytics data
-        error: "",
+        recording: false, // Indicates whether recording is in progress
+        recorder: null, // MediaRecorder instance for recording audio
+        processing: false, // Indicates whether audio processing is ongoing
+        audioChunks: [], // Array to store audio chunks during recording
+        audioStream: null, // Stores the audio stream from the microphone
+        audioBlob: null, // Blob representing the recorded audio
+        uploadedAudioBlob: null, // Blob representing the uploaded audio file
+        audioUrl: "", // URL for the recorded audio blob
+        audioUrlFromFile: "", // URL for the uploaded audio file
+        backendAudioUrl: "", // URL for the audio received from the backend
+        transcriptionData: null, // Stores transcription and translation data
+        error: "", // Stores error messages
       };
     },
     async mounted() {
+      // Register the WAV encoder if it's not already supported
       if (!MediaRecorder.isTypeSupported("audio/wav")) {
-        await register(await connect()); // Register the WAV encoder only if not registered
+        await register(await connect());
       }
     },
     methods: {
       toggleRecording() {
+        // Toggles recording on/off
         if (this.recording) {
           this.stopRecording();
         } else {
@@ -106,10 +109,13 @@
       },
       async startRecording() {
         try {
+          // Request access to the microphone
           const stream = await navigator.mediaDevices.getUserMedia({
             audio: true,
           });
+          this.audioStream = stream; // Store the audio stream
 
+          // Create a MediaRecorder instance
           this.recorder = new MediaRecorder(stream, { mimeType: "audio/wav" });
           this.recorder.ondataavailable = (e) => this.audioChunks.push(e.data);
           this.recorder.onstop = this.processRecording;
@@ -123,15 +129,20 @@
         if (this.recorder) {
           this.recorder.stop();
           this.recording = false;
-          this.stream.getTracks().forEach((track) => track.stop());
+
+          // Stop the audio stream tracks to release the microphone
+          this.audioStream.getTracks().forEach((track) => track.stop());
+          this.audioStream = null; // Clear the stream reference
         }
       },
       processRecording() {
+        // Create a Blob from the recorded audio chunks
         this.audioBlob = new Blob(this.audioChunks, { type: "audio/wav" });
         this.audioUrl = URL.createObjectURL(this.audioBlob);
         this.audioChunks = [];
       },
       async onFileChange(event) {
+        // Handle audio file selection
         const file = event.target.files[0];
         if (file) {
           this.uploadedAudioBlob = file;
@@ -139,6 +150,7 @@
         }
       },
       async sendAudio() {
+        // Send audio to the backend for processing
         if (this.audioBlob || this.uploadedAudioBlob) {
           const formData = new FormData();
           if (this.audioBlob) {
@@ -147,16 +159,16 @@
             formData.append("uploaded_audio", this.uploadedAudioBlob);
           }
 
-          // Retrieve the token from localStorage and set it in the headers
+          // Set authorization header from local storage
           const config = {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
-              "Content-Type": "multipart/form-data", // Ensure correct content type for file upload
+              "Content-Type": "multipart/form-data",
             },
           };
 
           try {
-            this.processing = true; // Show "Please wait..."
+            this.processing = true;
             alert("Audio File sent successfully.");
             const response = await axios.post(
               "https://voice-analyzer-ou85.onrender.com/transcription",
@@ -176,11 +188,12 @@
               this.error = "";
             }, 5000);
           } finally {
-            this.processing = false; // Hide "Please wait..."
+            this.processing = false;
           }
         }
       },
       discardAudio() {
+        // Discard recorded or uploaded audio
         this.audioBlob = null;
         this.uploadedAudioBlob = null;
         this.audioUrl = "";
@@ -188,6 +201,7 @@
         this.transcriptionData = null;
       },
       discardAiAudio() {
+        // Discard audio received from the backend
         this.backendAudioUrl = "";
         this.audioBlob = null;
         this.uploadedAudioBlob = null;
