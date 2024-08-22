@@ -13,8 +13,8 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="transcription in transcriptions" :key="transcription.id">
-          <td>{{ transcription.id }}</td>
+        <tr v-for="(transcription, index) in transcriptions" :key="index">
+          <td>{{ index + 1 }}</td>
           <td>{{ transcription.transcription }}</td>
           <td>{{ transcription.language }}</td>
           <td>{{ transcription.translated_text }}</td>
