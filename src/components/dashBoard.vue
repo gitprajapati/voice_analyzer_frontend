@@ -18,8 +18,8 @@
               <i class="fas fa-envelope"></i> {{ user.email }}
             </p>
 
-            <router-link class="btn btn-primary" :to="`analyzer`"
-              >Try Our Voice Chat</router-link
+            <router-link class="btn btn-primary" :to="`transcription`"
+              >Try Live Voice Transcriber</router-link
             >
           </div>
         </div>
