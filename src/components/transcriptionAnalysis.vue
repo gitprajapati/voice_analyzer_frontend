@@ -46,7 +46,7 @@
             },
           };
           const response = await axios.get(
-            "https://vaanitrack-backend.vercel.app/word-frequencies",
+            "https://vaanitrack-cf5f9c0de36a.herokuapp.com/word-frequencies",
             config
           );
           this.wordFrequencies = response.data;

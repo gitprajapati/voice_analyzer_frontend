@@ -72,7 +72,7 @@
             },
           };
           await axios.delete(
-            "https://vaanitrack-backend.vercel.app/logout",
+            "https://vaanitrack-cf5f9c0de36a.herokuapp.com/logout",
             config
           ),
             localStorage.removeItem("token"),

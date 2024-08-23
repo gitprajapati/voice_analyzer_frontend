@@ -147,7 +147,7 @@
             this.processing = true;
             alert("Audio File sent successfully.");
             const response = await fetch(
-              "https://vaanitrack-backend.vercel.app/vanichat",
+              "https://vaanitrack-cf5f9c0de36a.herokuapp.com/vanichat",
               {
                 method: "POST",
                 body: formData,
