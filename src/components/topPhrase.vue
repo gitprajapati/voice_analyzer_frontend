@@ -50,7 +50,7 @@
             },
           };
           const response = await axios.get(
-            "http://127.0.0.1:5000/top-three-phrase",
+            "https://vaanitrack-cf5f9c0de36a.herokuapp.com/top-three-phrase",
             config
           );
           if (response.status !== 200) {
