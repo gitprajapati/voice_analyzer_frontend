@@ -133,7 +133,7 @@
 <script>
   import axios from "axios";
   import auth from "../router/auth";
-
+  import { toast } from "vue3-toastify";
   export default {
     mounted() {
       document.title = "Login";
@@ -199,7 +199,7 @@
           formData.append("email", this.email);
           formData.append("password", this.password);
           formData.append("profile_pic", this.profilePic);
-
+          toast.warning("Please wait...");
           const result = await axios.post(
             "https://vaanitrack-cf5f9c0de36a.herokuapp.com/register",
             formData,
