@@ -179,7 +179,7 @@
             this.processing = true;
             toast.success("Audio uploaded successfully");
             const response = await axios.post(
-              "http://127.0.0.1:5000/transcription",
+              "https://vaanitrack-cf5f9c0de36a.herokuapp.com/transcription",
               formData,
               config
             );

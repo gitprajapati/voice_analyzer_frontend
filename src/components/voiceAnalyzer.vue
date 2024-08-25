@@ -145,10 +145,13 @@
           formData.append("audio", this.audioBlob);
           try {
             this.processing = true;
-            const response = await fetch("http://127.0.0.1:5000/vanichat", {
-              method: "POST",
-              body: formData,
-            });
+            const response = await fetch(
+              "https://vaanitrack-cf5f9c0de36a.herokuapp.com/vanichat",
+              {
+                method: "POST",
+                body: formData,
+              }
+            );
             if (!response.ok) {
               throw new Error("Failed to upload audio");
             }

@@ -52,7 +52,7 @@
           };
           this.loadingAnalysis = true;
           const response = await axios.get(
-            "http://127.0.0.1:5000/word-frequencies",
+            "https://vaanitrack-cf5f9c0de36a.herokuapp.com/word-frequencies",
             config
           );
           this.loadingAnalysis = false;

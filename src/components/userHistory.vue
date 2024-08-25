@@ -69,7 +69,7 @@
           };
           this.loadingHistory = true;
           const response = await axios.get(
-            "http://127.0.0.1:5000/user-transcriptions-history",
+            "https://vaanitrack-cf5f9c0de36a.herokuapp.com/user-transcriptions-history",
             config
           );
           this.transcriptions = response.data;
@@ -87,7 +87,7 @@
       //       },
       //     };
       //     const response = await axios.get(
-      //       "http://127.0.0.1:5000/top-unique-phrases",
+      //       "https://vaanitrack-cf5f9c0de36a.herokuapp.com/top-unique-phrases",
       //       config
       //     );
       //     this.topPhrases = response.data.top_phrases;

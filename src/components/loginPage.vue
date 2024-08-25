@@ -152,7 +152,7 @@
           try {
             const google_token = response.credential;
             const result = await axios.post(
-              "http://127.0.0.1:5000/login",
+              "https://vaanitrack-cf5f9c0de36a.herokuapp.com/login",
               { google_token },
               {
                 headers: {
@@ -175,7 +175,7 @@
       async handleNormalLogin() {
         try {
           const result = await axios.post(
-            "http://127.0.0.1:5000/login",
+            "https://vaanitrack-cf5f9c0de36a.herokuapp.com/login",
             { email: this.email, password: this.password },
             {
               headers: {
@@ -201,7 +201,7 @@
           formData.append("profile_pic", this.profilePic);
 
           const result = await axios.post(
-            "http://127.0.0.1:5000/register",
+            "https://vaanitrack-cf5f9c0de36a.herokuapp.com/register",
             formData,
             {
               headers: {

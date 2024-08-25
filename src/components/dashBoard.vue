@@ -61,7 +61,7 @@
         };
 
         const response = await axios.get(
-          "http://127.0.0.1:5000/dashboard",
+          "https://vaanitrack-cf5f9c0de36a.herokuapp.com/dashboard",
           config
         );
         if (response.data.status_code === 200) {
@@ -79,7 +79,10 @@
               Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
           };
-          await axios.delete("http://127.0.0.1:5000/logout", config),
+          await axios.delete(
+            "https://vaanitrack-cf5f9c0de36a.herokuapp.com/logout",
+            config
+          ),
             localStorage.removeItem("token"),
             this.$router.push("/login");
         } catch (error) {

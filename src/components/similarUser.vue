@@ -55,7 +55,7 @@
           },
         };
         const response = await axios.get(
-          "http://127.0.0.1:5000/similar-users",
+          "https://vaanitrack-cf5f9c0de36a.herokuapp.com/similar-users",
           config
         );
         if (response.data.message) {
