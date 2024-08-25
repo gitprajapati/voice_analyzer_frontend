@@ -6,7 +6,7 @@ import vue3GoogleLogin from "vue3-google-login";
 // Import Bootstrap and BootstrapVue CSS files
 import "bootstrap/dist/css/bootstrap.css";
 import "bootstrap-vue-3/dist/bootstrap-vue-3.css";
-
+import { Vue3Toastify } from "vue3-toastify";
 // Import BootstrapVue 3
 import BootstrapVue3 from "bootstrap-vue-3";
 
@@ -19,7 +19,10 @@ app.use(vue3GoogleLogin, {
 });
 app.use(BootstrapVue3);
 app.use(router);
-
+app.use(Vue3Toastify, {
+  autoClose: 3000,
+  position: "top-right",
+});
 // Check for stored credentials and update auth state
 const storedUser = localStorage.getItem("user");
 if (storedUser) {

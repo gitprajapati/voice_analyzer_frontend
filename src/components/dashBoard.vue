@@ -8,12 +8,21 @@
             <h1 class="display-4">Dashboard</h1>
           </div>
           <div class="card-body text-center">
-            <img
-              :src="user.profile_pic"
-              alt="Profile Picture"
-              class="profile-pic rounded-circle mb-3"
-            />
-            <h2 class="card-title">{{ user.name }}</h2>
+            <div v-if="user.profile_pic">
+              <img
+                :src="user.profile_pic"
+                alt="Profile Picture"
+                class="profile-pic rounded-circle mb-3"
+              />
+            </div>
+            <div v-else>
+              <img
+                src="../assets/profile_logo.png"
+                alt="Profile Picture"
+                class="profile-pic rounded-circle mb-3"
+              />
+            </div>
+            <h2 class="card-title text-capitalize">{{ user.name }}</h2>
             <p class="card-text">
               <i class="fas fa-envelope"></i> {{ user.email }}
             </p>
@@ -52,7 +61,7 @@
         };
 
         const response = await axios.get(
-          "https://vaanitrack-cf5f9c0de36a.herokuapp.com/dashboard",
+          "http://127.0.0.1:5000/dashboard",
           config
         );
         if (response.data.status_code === 200) {
@@ -70,10 +79,7 @@
               Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
           };
-          await axios.delete(
-            "https://vaanitrack-cf5f9c0de36a.herokuapp.com/logout",
-            config
-          ),
+          await axios.delete("http://127.0.0.1:5000/logout", config),
             localStorage.removeItem("token"),
             this.$router.push("/login");
         } catch (error) {
@@ -91,6 +97,9 @@
     },
     components: {
       navBar,
+    },
+    mounted() {
+      document.title = "Dashboard";
     },
   };
 </script>

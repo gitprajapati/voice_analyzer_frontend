@@ -26,7 +26,12 @@
               />
             </div>
             <div class="mt-3">
-              <input type="file" accept="audio/*" @change="onFileChange" />
+              <input
+                type="file"
+                accept="audio/*"
+                @change="onFileChange"
+                ref="fileInput"
+              />
             </div>
             <div v-if="recording" class="mt-3">
               <p>Recording...</p>
@@ -66,12 +71,14 @@
     </div>
   </div>
 </template>
+
 <script>
   import { MediaRecorder, register } from "extendable-media-recorder";
   import { connect } from "extendable-media-recorder-wav-encoder";
   import navBar from "./navBar.vue";
   import axios from "axios";
-
+  import { toast } from "vue3-toastify";
+  import "vue3-toastify/dist/index.css";
   export default {
     components: {
       navBar,
@@ -89,10 +96,10 @@
         audioUrlFromFile: "", // URL for the uploaded audio file
         backendAudioUrl: "", // URL for the audio received from the backend
         transcriptionData: null, // Stores transcription and translation data
-        error: "", // Stores error messages
       };
     },
     async mounted() {
+      document.title = "Live Transcriber";
       // Register the WAV encoder if it's not already supported
       if (!MediaRecorder.isTypeSupported("audio/wav")) {
         await register(await connect());
@@ -123,6 +130,7 @@
           this.recording = true;
         } catch (error) {
           console.error("Error getting user media:", error);
+          toast.error("Error accessing microphone: " + error.message);
         }
       },
       stopRecording() {
@@ -169,9 +177,9 @@
 
           try {
             this.processing = true;
-            alert("Audio File sent successfully.");
+            toast.success("Audio uploaded successfully");
             const response = await axios.post(
-              "https://vaanitrack-cf5f9c0de36a.herokuapp.com/transcription",
+              "http://127.0.0.1:5000/transcription",
               formData,
               config
             );
@@ -182,11 +190,7 @@
 
             this.transcriptionData = response.data;
           } catch (error) {
-            console.error("Error uploading audio:", error);
-            this.error = error;
-            setTimeout(() => {
-              this.error = "";
-            }, 5000);
+            toast.error("Error uploading audio: " + error.message);
           } finally {
             this.processing = false;
           }
@@ -199,6 +203,7 @@
         this.audioUrl = "";
         this.audioUrlFromFile = "";
         this.transcriptionData = null;
+        this.$refs.fileInput.value = null;
       },
       discardAiAudio() {
         // Discard audio received from the backend

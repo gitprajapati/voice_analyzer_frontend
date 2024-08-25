@@ -47,6 +47,11 @@
               >
             </li>
             <li class="nav-item">
+              <router-link class="nav-link" :to="`/similar-users`"
+                >Similar users</router-link
+              >
+            </li>
+            <li class="nav-item">
               <button class="nav-link btn btn-danger" @click="logout">
                 Logout
               </button>
@@ -71,10 +76,7 @@
               Authorization: `Bearer ${localStorage.getItem("token")}`,
             },
           };
-          await axios.delete(
-            "https://vaanitrack-cf5f9c0de36a.herokuapp.com/logout",
-            config
-          ),
+          await axios.delete("http://127.0.0.1:5000/logout", config),
             localStorage.removeItem("token"),
             this.$router.push("/login");
         } catch (error) {

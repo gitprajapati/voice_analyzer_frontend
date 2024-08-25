@@ -77,7 +77,8 @@
   import { MediaRecorder, register } from "extendable-media-recorder";
   import { connect } from "extendable-media-recorder-wav-encoder";
   import navBar from "./navBar.vue";
-
+  import { toast } from "vue3-toastify";
+  import "vue3-toastify/dist/index.css";
   export default {
     components: {
       navBar,
@@ -95,6 +96,7 @@
       };
     },
     async mounted() {
+      document.title = "Vaani ChatBot";
       if (!MediaRecorder.isTypeSupported("audio/wav")) {
         await register(await connect()); // Register the WAV encoder only if not registered
       }
@@ -113,7 +115,6 @@
             audio: true,
           });
           this.audioStream = stream; // Store the stream
-
           this.recorder = new MediaRecorder(stream, { mimeType: "audio/wav" });
           this.recorder.ondataavailable = (e) => this.audioChunks.push(e.data);
           this.recorder.onstop = this.processRecording;
@@ -121,13 +122,13 @@
           this.recording = true;
         } catch (error) {
           console.error("Error getting user media:", error);
+          toast.error("Error accessing microphone: " + error.message);
         }
       },
       stopRecording() {
         if (this.recorder) {
           this.recorder.stop();
           this.recording = false;
-
           // Stop the audio stream tracks
           this.audioStream.getTracks().forEach((track) => track.stop());
           this.audioStream = null; // Clear the stream reference
@@ -142,27 +143,22 @@
         if (this.audioBlob) {
           const formData = new FormData();
           formData.append("audio", this.audioBlob);
-
           try {
             this.processing = true;
-            alert("Audio File sent successfully.");
-            const response = await fetch(
-              "https://vaanitrack-cf5f9c0de36a.herokuapp.com/vanichat",
-              {
-                method: "POST",
-                body: formData,
-              }
-            );
-
+            const response = await fetch("http://127.0.0.1:5000/vanichat", {
+              method: "POST",
+              body: formData,
+            });
             if (!response.ok) {
               throw new Error("Failed to upload audio");
             }
-
             const blob = await response.blob();
             const backend_url = URL.createObjectURL(blob);
             this.backendAudioUrl = backend_url;
+            toast.success("Audio uploaded successfully");
           } catch (error) {
             console.error("Error uploading audio:", error);
+            toast.error("Error uploading audio: " + error.message);
           } finally {
             this.processing = false;
           }
@@ -178,7 +174,6 @@
     },
   };
 </script>
-
 <style scoped>
   .main-content {
     padding-top: 120px;
