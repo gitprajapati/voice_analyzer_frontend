@@ -215,8 +215,15 @@
             this.showRegistration = false;
           }
         } catch (error) {
-          console.error("Error during registration:", error);
-          toast.error(error.message);
+          console.error("Error during registration:", error.response.data);
+          if (error.response.data.message === "Email already registered.") {
+            this.errorMessage =
+              "This email is already registered. Please use a different email or login.";
+          } else {
+            this.errorMessage =
+              "An error occurred during registration. Please try again.";
+          }
+          toast.error(this.errorMessage);
         }
       },
       onFileChange(event) {
