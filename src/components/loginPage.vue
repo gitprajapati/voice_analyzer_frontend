@@ -216,6 +216,7 @@
           }
         } catch (error) {
           console.error("Error during registration:", error);
+          toast.error(error.message);
         }
       },
       onFileChange(event) {
