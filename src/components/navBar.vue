@@ -48,7 +48,12 @@
             </li>
             <li class="nav-item">
               <router-link class="nav-link" :to="`/similar-users`"
-                >Similar users</router-link
+                >Similar Users</router-link
+              >
+            </li>
+            <li class="nav-item">
+              <router-link class="nav-link" :to="`/top-three-phrase`"
+                >Top Phrases</router-link
               >
             </li>
             <li class="nav-item">

@@ -6,7 +6,7 @@ import liveTranscriber from "@/components/liveTranscriber.vue";
 import userHistory from "@/components/userHistory.vue";
 import transcriptionAnalysis from "@/components/transcriptionAnalysis.vue";
 import similarUser from "@/components/similarUser.vue";
-
+import topPhrase from "@/components/topPhrase.vue";
 const routes = [
   {
     path: "/",
@@ -58,6 +58,12 @@ const routes = [
     path: "/similar-users",
     name: "similar-users",
     component: similarUser,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/top-three-phrase",
+    name: "top-three-phrase",
+    component: topPhrase,
     meta: { requiresAuth: true },
   },
 ];
