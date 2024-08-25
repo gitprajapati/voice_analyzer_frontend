@@ -73,4 +73,19 @@ const router = createRouter({
   routes,
 });
 
+// Navigation guard to check authentication
+router.beforeEach((to, from, next) => {
+  // Check if the route requires authentication
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    // Check if user is authenticated
+    if (localStorage.getItem("token")) {
+      next(); // User is authenticated, allow access
+    } else {
+      next("/login"); // User is not authenticated, redirect to login
+    }
+  } else {
+    next(); // Route does not require authentication, allow access
+  }
+});
+
 export default router;
